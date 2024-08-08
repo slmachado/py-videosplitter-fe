@@ -10,7 +10,7 @@ class VideoSplitterApp:
         self.root.title("VideoSplitter")
 
         self.video_file = None
-        self.output_dir = os.getcwd()  # Certifique-se de definir o output_dir aqui
+        self.output_dir = os.getcwd()
 
         self.create_widgets()
         self.configure_grid()
@@ -70,13 +70,16 @@ class VideoSplitterApp:
         output1 = os.path.join(self.output_dir, "part1.mp4")
         output2 = os.path.join(self.output_dir, "part2.mp4")
 
+        # Full path to exec
+        executavel_rust = "/home/sergio/RustRoverProjects/video_splitter/target/release/video_splitter"
+
         try:
             subprocess.run([
-                "videosplitter",  # Assumindo que o executável do Rust está no PATH ou no mesmo diretório
-                "-i", self.video_file,
-                "-o", output1,
-                "-p", output2,
-                "-t", split_time
+                executavel_rust,
+                self.video_file,
+                output1,
+                output2,
+                split_time
             ], check=True)
 
             messagebox.showinfo("Success", f"Video successfully split into:\n{output1}\n{output2}")
